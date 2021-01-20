@@ -13,20 +13,34 @@ type CommonController struct {
 }
 
 type JsonStruct struct {
-    Code int            `json:"code"`
-    Msg interface{}     `json:"msg"`
-    Items interface{}   `json:"items"`
-    Count int64         `json:"count"`
+    Code int
+    Msg interface{}
+    Items interface{}
+    Count int64
 }
 
-func ReturnSuccess(code int, msg interface{}, items interface{}, count int64) (json *JsonStruct) {
-    json = &JsonStruct{Code: code, Msg: msg, Items: items, Count: count}
-    return
+func (this *CommonController) ReturnSuccess(msg interface{}, items interface{}, count int64) {
+    res := JsonStruct{
+        0,
+        msg,
+        items,
+        count,
+    }
+    this.Data["json"] = res
+    this.ServeJSON()
+    this.StopRun()
 }
 
-func ReturnError(code int, msg interface{}) (json *JsonStruct) {
-    json = &JsonStruct{Code: code, Msg: msg}
-    return
+func (this *CommonController) ReturnError(code int, msg interface{}) {
+    res := JsonStruct{
+        code,
+        msg,
+        nil,
+        0,
+    }
+    this.Data["json"] = res
+    this.ServeJSON()
+    this.StopRun()
 }
 
 // md5加盐
