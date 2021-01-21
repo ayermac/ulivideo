@@ -13,10 +13,10 @@ type CommonController struct {
 }
 
 type JsonStruct struct {
-    Code int
-    Msg interface{}
-    Items interface{}
-    Count int64
+    Code int `json:"code"`
+    Msg interface{} `json:"msg"`
+    Items interface{} `json:"items"`
+    Count int64 `json:"count"`
 }
 
 func (this *CommonController) ReturnSuccess(msg interface{}, items interface{}, count int64) {
