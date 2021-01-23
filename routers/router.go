@@ -45,4 +45,7 @@ func init() {
 	beego.Include(
 		&controllers.BarrageController{},
 	)
+	beego.Include(
+		&controllers.AliyunController{},
+	)
 }

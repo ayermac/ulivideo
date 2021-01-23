@@ -158,3 +158,28 @@ func (this *VideoController) VideoEpisodesList()  {
 		this.ReturnError(4004, "没有相关内容")
 	}
 }
+
+//保存用户上传视频信息
+// @router /video/save [*]
+func (this *VideoController) VideoSave() {
+	playUrl := this.GetString("playUrl")
+	title := this.GetString("title")
+	subTitle := this.GetString("subTitle")
+	channelId, _ := this.GetInt("channelId")
+	typeId, _ := this.GetInt("typeId")
+	regionId, _ := this.GetInt("regionId")
+	uid, _ := this.GetInt("uid")
+	aliyunVideoId := this.GetString("aliyunVideoId")
+	if uid == 0 {
+		this.ReturnError(4001, "请先登录")
+	}
+	if playUrl == "" {
+		this.ReturnError(4002, "视频地址不能为空")
+	}
+	err := models.SaveVideo(title, subTitle, channelId, regionId, typeId, playUrl, uid, aliyunVideoId)
+	if err == nil {
+		this.ReturnSuccess( "success", nil, 1)
+	} else {
+		this.ReturnError(5000, err)
+	}
+}
