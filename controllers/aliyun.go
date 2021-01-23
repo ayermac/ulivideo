@@ -7,6 +7,7 @@ import (
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/vod"
 	"ulivideoapi/models"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type AliyunController struct {
@@ -14,8 +15,8 @@ type AliyunController struct {
 }
 
 var (
-	accessKeyId     = ""
-	accessKeySecret = ""
+	accessKeyId,_     = beego.AppConfig.String("videoAccessKeyId")
+	accessKeySecret,_ = beego.AppConfig.String("videoAccessKeySecret")
 )
 
 type JSONS struct {
