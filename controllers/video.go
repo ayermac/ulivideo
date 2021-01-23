@@ -113,3 +113,48 @@ func (this *VideoController) ChannelVideo() {
 		this.ReturnError(4001, "没有相关内容")
 	}
 }
+
+//我的视频管理
+// @router /user/video [*]
+func (this *VideoController) UserVideo() {
+	uid, _ := this.GetInt("uid")
+	if uid == 0 {
+		this.ReturnError(4001, "必须指定用户")
+	}
+	num, videos, err := models.GetUserVideo(uid)
+	if err == nil {
+		this.ReturnSuccess("success", videos, num)
+	} else {
+		this.ReturnError(4004, "没有相关内容")
+	}
+}
+
+// 获取视频详情
+// @router /video/info [*]
+func (this *VideoController) VideoInfo()  {
+	videoId, _ := this.GetInt("videoId")
+	if videoId == 0 {
+		this.ReturnError(4001, "必须指定视频ID")
+	}
+	videos, err := models.GetVideoInfo(videoId)
+	if err == nil {
+		this.ReturnSuccess("success", videos, 1)
+	} else {
+		this.ReturnError(4004, "没有相关内容")
+	}
+}
+
+//获取视频剧集列表
+// @router /video/episodes/list [*]
+func (this *VideoController) VideoEpisodesList()  {
+	videoId, _ := this.GetInt("videoId")
+	if videoId == 0 {
+		this.ReturnError(4001, "必须指定视频ID")
+	}
+	num, episodes, err := models.GetVideoEpisodesList(videoId)
+	if err == nil {
+		this.ReturnSuccess("success", episodes, num)
+	} else {
+		this.ReturnError(4004, "没有相关内容")
+	}
+}

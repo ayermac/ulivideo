@@ -7,6 +7,24 @@ import (
 
 func init() {
 
+    beego.GlobalControllerRouter["ulivideoapi/controllers:BarrageController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:BarrageController"],
+        beego.ControllerComments{
+            Method: "Save",
+            Router: "/barrage/save",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:BarrageController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:BarrageController"],
+        beego.ControllerComments{
+            Method: "BarrageWs",
+            Router: "/barrage/ws",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ulivideoapi/controllers:BaseController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:BaseController"],
         beego.ControllerComments{
             Method: "ChannelRegion",
@@ -20,6 +38,24 @@ func init() {
         beego.ControllerComments{
             Method: "ChannelType",
             Router: "/channel/type",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:CommentController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:CommentController"],
+        beego.ControllerComments{
+            Method: "List",
+            Router: "/comment/list",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:CommentController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:CommentController"],
+        beego.ControllerComments{
+            Method: "Save",
+            Router: "/comment/save",
             AllowHTTPMethods: []string{"*"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -70,6 +106,24 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["ulivideoapi/controllers:TopController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:TopController"],
+        beego.ControllerComments{
+            Method: "ChannelTop",
+            Router: "/channel/top",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:TopController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:TopController"],
+        beego.ControllerComments{
+            Method: "TypeTop",
+            Router: "/type/top",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ulivideoapi/controllers:UserController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:UserController"],
         beego.ControllerComments{
             Method: "LoginDo",
@@ -84,6 +138,15 @@ func init() {
             Method: "SaveRegister",
             Router: "/register/save",
             AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:UserController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "SendMessageDo",
+            Router: "/send/message",
+            AllowHTTPMethods: []string{"*"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -128,6 +191,33 @@ func init() {
         beego.ControllerComments{
             Method: "ChannelVideo",
             Router: "/channel/video",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"],
+        beego.ControllerComments{
+            Method: "UserVideo",
+            Router: "/user/video",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"],
+        beego.ControllerComments{
+            Method: "VideoEpisodesList",
+            Router: "/video/episodes/list",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"],
+        beego.ControllerComments{
+            Method: "VideoInfo",
+            Router: "/video/info",
             AllowHTTPMethods: []string{"*"},
             MethodParams: param.Make(),
             Filters: nil,

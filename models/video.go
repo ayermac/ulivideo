@@ -35,6 +35,16 @@ type VideoData struct {
 	Comment       int
 }
 
+type Episodes struct {
+	Id            int
+	Title         string
+	AddTime       int64
+	Num           int
+	PlayUrl       string
+	Comment       int
+	AliyunVideoId string
+}
+
 func init()  {
 	orm.RegisterModel(new(Video))
 }
@@ -95,4 +105,41 @@ func GetChannelVideoList(channelId int, regionId int, typeId int, end string, so
 	_, err := qs.Values(&videos, "id", "title", "sub_title", "add_time", "img", "img1", "episodes_count", "is_end")
 
 	return nums, videos, err
+}
+
+func GetUserVideo(uid int) (int64, []VideoData, error) {
+	o := orm.NewOrm()
+	var videos []VideoData
+	num, err := o.Raw("SELECT id,title,sub_title,img,img1,add_time,episodes_count, is_end FROM video WHERE user_id=? ORDER BY add_time DESC", uid).QueryRows(&videos)
+	return num, videos, err
+}
+
+func GetVideoInfo(videoId int) (Video, error)  {
+	o := orm.NewOrm()
+	var video Video
+	err := o.Raw("SELECT * FROM video WHERE id=?", videoId).QueryRow(&video)
+	return video, err
+}
+
+func GetVideoEpisodesList(videoId int) (int64, []Episodes, error)  {
+	o := orm.NewOrm()
+	var episodes []Episodes
+	num, err := o.Raw("SELECT * FROM video_episodes WHERE video_id=? AND status =1 ORDER BY num ASC", videoId).QueryRows(&episodes)
+	return num, episodes, err
+}
+
+//频道排行榜
+func GetChannelTop(channelId int) (int64, []VideoData, error) {
+	o := orm.NewOrm()
+	var videos []VideoData
+	num, err := o.Raw("SELECT id,title,sub_title,img,img1,add_time,episodes_count,is_end FROM video WHERE status=1 AND channel_id=? ORDER BY comment DESC LIMIT 10", channelId).QueryRows(&videos)
+	return num, videos, err
+}
+
+//类型排行榜
+func GetTypeTop(typeId int) (int64, []VideoData, error) {
+	o := orm.NewOrm()
+	var videos []VideoData
+	num, err := o.Raw("SELECT id,title,sub_title,img,img1,add_time,episodes_count,is_end FROM video WHERE status=1 AND type_id=? ORDER BY comment DESC LIMIT 10", typeId).QueryRows(&videos)
+	return num, videos, err
 }

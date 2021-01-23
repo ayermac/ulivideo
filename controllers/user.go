@@ -3,6 +3,8 @@ package controllers
 import (
 	//beego "github.com/beego/beego/v2/server/web"
 	"regexp"
+	"strconv"
+	"strings"
 	"ulivideoapi/models"
 )
 
@@ -73,4 +75,32 @@ func (this *UserController) LoginDo()  {
 	} else {
 		this.ReturnError(4004, "手机号或密码不正确")
 	}
+}
+
+
+
+//批量发送通知消息
+// @router /send/message [*]
+func (this *UserController) SendMessageDo() {
+	uids := this.GetString("uids")
+	content := this.GetString("content")
+	
+	if uids == "" {
+		this.ReturnError(4001, "请填写接收人~")
+	}
+	if content == "" {
+		this.ReturnError(4002, "请填写发送内容")
+	}
+
+	messageId, err := models.SendMessageDo(content)
+	if err == nil {
+		uidConfig := strings.Split(uids, ",")
+		for _, v := range uidConfig {
+			userId, _ := strconv.Atoi(v)
+			_ = models.SendMessageUser(userId, messageId)
+		}
+
+		this.ReturnSuccess("发送成功", "", 1)
+	}
+	this.ReturnError(500, "发送失败，请联系客服")
 }
