@@ -48,4 +48,7 @@ func init() {
 	beego.Include(
 		&controllers.AliyunController{},
 	)
+	beego.Include(
+		&controllers.MqController{},
+	)
 }

@@ -12,4 +12,5 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/siddontang/go v0.0.0-20170517070808-cb568a3e5cc0
 	github.com/smartystreets/goconvey v1.6.4
+	github.com/streadway/amqp v1.0.0
 )

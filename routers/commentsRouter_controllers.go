@@ -97,6 +97,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+        beego.ControllerComments{
+            Method: "GetMq",
+            Router: "/mq/push",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ulivideoapi/controllers:ObjectController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:ObjectController"],
         beego.ControllerComments{
             Method: "Post",
