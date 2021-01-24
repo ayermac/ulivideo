@@ -16,16 +16,19 @@ func Connect() redis.Conn {
 func PoolConnect() redis.Conn  {
 
 	pool := &redis.Pool{
-		MaxIdle: 1000,// 最大空闲连接数
-		MaxActive: 1000,// 最大连接数
+		MaxIdle: 10,// 最大空闲连接数
+		MaxActive: 100,// 最大连接数
 		IdleTimeout: 180 * time.Second,// 空闲连接超时时间
 		Wait: false,// 超过最大连接数时，是等待还是报错
 		Dial: func() (redis.Conn, error) {
-			redisPassword, _ := beego.AppConfig.String("redisPassword")
 			redisAddress, _ :=  beego.AppConfig.String("redisAddress")
-			setPasswd := redis.DialPassword(redisPassword)
-			c, err := redis.Dial("tcp", redisAddress, setPasswd)
+			c, err := redis.Dial("tcp", redisAddress)
 			if err != nil {
+				return nil, err
+			}
+			redisPassword, _ := beego.AppConfig.String("redisPassword")
+			if _, err := c.Do("AUTH", redisPassword); err != nil {
+				_ = c.Close()
 				return nil, err
 			}
 			return c, nil
