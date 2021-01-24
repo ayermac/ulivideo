@@ -136,7 +136,7 @@ func (this *VideoController) VideoInfo()  {
 	if videoId == 0 {
 		this.ReturnError(4001, "必须指定视频ID")
 	}
-	videos, err := models.GetVideoInfo(videoId)
+	videos, err := models.RedisGetVideoInfo(videoId)
 	if err == nil {
 		this.ReturnSuccess("success", videos, 1)
 	} else {
@@ -151,7 +151,7 @@ func (this *VideoController) VideoEpisodesList()  {
 	if videoId == 0 {
 		this.ReturnError(4001, "必须指定视频ID")
 	}
-	num, episodes, err := models.GetVideoEpisodesList(videoId)
+	num, episodes, err := models.RedisGetVideoEpisodesList(videoId)
 	if err == nil {
 		this.ReturnSuccess("success", episodes, num)
 	} else {

@@ -2,7 +2,10 @@ package models
 
 import (
 	"github.com/beego/beego/v2/client/orm"
+	"github.com/gomodule/redigo/redis"
+	"strconv"
 	"time"
+	redisClient "ulivideoapi/services/redis"
 )
 
 type User struct {
@@ -73,5 +76,35 @@ func GetUserInfo(userId int) (UserInfo, error) {
 	var userInfo UserInfo
 	err := o.Raw("SELECT id, name, add_time, avatar FROM user where id = ? limit 1", userId).QueryRow(&userInfo)
 
+	return userInfo, err
+}
+
+// 从Redis获取用户信息
+func RedisGetUserInfo(userId int) (UserInfo, error) {
+	var userInfo UserInfo
+	conn := redisClient.PoolConnect()
+	defer conn.Close()
+
+	rKey := "user:info:" + strconv.Itoa(userId)
+
+	//判断redis中是否存在
+	exists, err := redis.Bool(conn.Do("exists", rKey))
+	if exists {
+		res, _ := redis.Values(conn.Do("hgetall", rKey))
+		err = redis.ScanStruct(res, &userInfo)
+	} else {
+		o := orm.NewOrm()
+		err := o.Raw("SELECT id, name, add_time, avatar FROM user where id = ? limit 1", userId).QueryRow(&userInfo)
+		if err == nil {
+			_, err := conn.Do("hmset", redis.Args{rKey}.AddFlat(userInfo)...)
+			if err == nil {
+				conn.Do("expire", rKey, 86400)
+			}
+		}
+
+		if err != nil {
+			panic(err)
+		}
+	}
 	return userInfo, err
 }

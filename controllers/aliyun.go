@@ -26,6 +26,7 @@ type JSONS struct {
 	VideoId string
 }
 
+// 初始化客户端
 func (this *AliyunController) InitVodClient(accessKeyId string, accessKeySecret string) (client *vod.Client, err error) {
 	// 点播服务接入区域
 	regionId := "cn-shanghai"
@@ -55,7 +56,7 @@ func (this *AliyunController) MyCreateUploadVideo(client *vod.Client, title stri
 	return client.CreateUploadVideo(request)
 }
 
-//
+// 生成上传凭证
 // @router /aliyun/create/upload/video [*]
 func (this *AliyunController) CreateUploadVideo() {
 	title := this.GetString("title")
@@ -91,6 +92,7 @@ func (this *AliyunController) MyRefreshUploadVideo(client *vod.Client, videoId s
 	return client.RefreshUploadVideo(request)
 }
 
+// 刷新上传凭证
 // @router /aliyun/refresh/upload/video [*]
 func (this *AliyunController) RefreshUploadVideo() {
 	videoId := this.GetString("videoId")
@@ -126,6 +128,7 @@ type PlayJSONS struct {
 	PlayAuth string
 }
 
+// 获取视频播放凭证
 // @router /aliyun/video/play/auth [*]
 func (this *AliyunController) GetPlayAuth() {
 	videoId := this.GetString("videoId")

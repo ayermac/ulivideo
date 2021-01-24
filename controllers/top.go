@@ -14,7 +14,7 @@ func (this *TopController) ChannelTop() {
 	if channelId == 0 {
 		this.ReturnError(4001, "必须指定频道")
 	}
-	num, videos, err := models.GetChannelTop(channelId)
+	num, videos, err := models.RedisGetChannelTop(channelId)
 	if err == nil {
 		this.ReturnSuccess("success", videos, num)
 	} else {
@@ -29,7 +29,7 @@ func (this *TopController) TypeTop() {
 	if typeId == 0 {
 		this.ReturnError(4001, "必须指定类型")
 	}
-	num, videos, err := models.GetTypeTop(typeId)
+	num, videos, err := models.RedisGetTypeTop(typeId)
 	if err == nil {
 		this.ReturnSuccess("success", videos, num)
 	} else {
