@@ -82,3 +82,37 @@ func (this *MqController) GetTopic() {
 	}()
 	this.Ctx.WriteString("hello topic")
 }
+
+// 死信队列push
+// @router /mq/dlx/push [*]
+func (this *MqController) GetDlx() {
+	go func() {
+		count := 0
+		for {
+			err := mq.PublishDlx("ulivideo.demo.dlx", "ulivideo.demo", "dlx" + strconv.Itoa(count))
+			if err != nil {
+				panic(err)
+			}
+			count++
+			time.Sleep(1 * time.Second)
+		}
+	}()
+	this.Ctx.WriteString("hello dlx")
+}
+
+// 死信队列push
+// @router /mq/dlx/two/push [*]
+func (this *MqController) GetTwoDlx() {
+	go func() {
+		count := 0
+		for {
+			err := mq.PublishEx("ulivideo.demo.dlx2", "fanout", "", "dlxtwo" + strconv.Itoa(count))
+			if err != nil {
+				panic(err)
+			}
+			count++
+			time.Sleep(1 * time.Second)
+		}
+	}()
+	this.Ctx.WriteString("hello dlx2")
+}

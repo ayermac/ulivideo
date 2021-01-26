@@ -108,6 +108,24 @@ func init() {
 
     beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
         beego.ControllerComments{
+            Method: "GetDlx",
+            Router: "/mq/dlx/push",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+        beego.ControllerComments{
+            Method: "GetTwoDlx",
+            Router: "/mq/dlx/two/push",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+        beego.ControllerComments{
             Method: "GetFanout",
             Router: "/mq/fanout/push",
             AllowHTTPMethods: []string{"*"},

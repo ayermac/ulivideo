@@ -1,8 +1,10 @@
 package models
 
 import (
+	"encoding/json"
 	"github.com/beego/beego/v2/client/orm"
 	"time"
+	"ulivideoapi/services/mq"
 )
 
 type Message struct {
@@ -45,3 +47,16 @@ func SendMessageUser(userId int, messageId int64) error {
 	return err
 }
 
+// 保存消息接收人到Mq
+func SendMessageUserToMq(userId int, messageId int64) error {
+	type Data struct {
+		UserId int
+		MessageId int64
+	}
+	var data Data
+	data.UserId = userId
+	data.MessageId = messageId
+	dataJson, _ := json.Marshal(data)
+	err := mq.PublishEx("ulivideo", "direct", "ulivideo.message", string(dataJson))
+	return err
+}

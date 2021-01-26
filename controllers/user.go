@@ -97,7 +97,7 @@ func (this *UserController) SendMessageDo() {
 		uidConfig := strings.Split(uids, ",")
 		for _, v := range uidConfig {
 			userId, _ := strconv.Atoi(v)
-			_ = models.SendMessageUser(userId, messageId)
+			_ = models.SendMessageUserToMq(userId, messageId)
 		}
 
 		this.ReturnSuccess("发送成功", "", 1)

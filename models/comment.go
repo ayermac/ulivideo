@@ -1,8 +1,10 @@
 package models
 
 import (
+	"encoding/json"
 	"github.com/beego/beego/v2/client/orm"
 	"time"
+	"ulivideoapi/services/mq"
 )
 
 type Comment struct {
@@ -43,6 +45,20 @@ func SaveComment(content string, uid int, episodesId int, videoId int) error  {
 		o.Raw("UPDATE video SET comment = comment + 1 WHERE id = ?", videoId).Exec()
 		// 修改视频剧集评论数
 		o.Raw("UPDATE video_episodes SET comment = comment + 1 WHERE id = ?", episodesId).Exec()
+		// 更新Redis排行榜-通过MQ
+		// 发布订阅简单模式
+		videoObj := map[string]int{
+			"VideoId": videoId,
+		}
+		videoJson, _ := json.Marshal(videoObj)
+		_ = mq.PublishEx("ulivideo", "direct", "ulivideo.top", string(videoJson))
+		//延迟增加评论数
+		videoCountObj := map[string]int{
+			"VideoId": videoId,
+			"EpisodesId": episodesId,
+		}
+		videoCountJson, _ := json.Marshal(videoCountObj)
+		_ = mq.PublishDlx("ulivideo.comment.count", string(videoCountJson), "ulivideo.comment.routing")
 	}
 	return err
 }
