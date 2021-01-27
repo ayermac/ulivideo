@@ -6,6 +6,7 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 	"strconv"
 	"time"
+	"ulivideoapi/services/es"
 	redisClient "ulivideoapi/services/redis"
 	"github.com/gomodule/redigo/redis"
 )
@@ -111,6 +112,68 @@ func GetChannelVideoList(channelId int, regionId int, typeId int, end string, so
 	_, err := qs.Values(&videos, "id", "title", "sub_title", "add_time", "img", "img1", "episodes_count", "is_end")
 
 	return nums, videos, err
+}
+
+func GetChannelVideoListEs(channelId int, regionId int, typeId int, end string, sort string, offset int, limit int) (int64, []Video, error) {
+	query := make(map[string]interface{})
+	bools := make(map[string]interface{})
+	var must []map[string]interface{}
+	must = append(must, map[string]interface{}{
+		"term":map[string]interface{}{
+			"channel_id": channelId,
+		},
+	})
+	must = append(must, map[string]interface{}{"term":map[string]interface{}{
+		"status": 1,
+	}})
+
+	if regionId > 0 {
+		must = append(must, map[string]interface{}{"term":map[string]interface{}{
+			"region_id": regionId,
+		}})
+	}
+	if typeId > 0 {
+		must = append(must, map[string]interface{}{
+			"term":map[string]interface{}{
+				"type_id": typeId,
+			},
+		})
+	}
+	if end == "n" {
+		must = append(must, map[string]interface{}{"term":map[string]interface{}{
+			"is_end": 0,
+		}})
+	} else if end == "y" {
+		must = append(must, map[string]interface{}{"term":map[string]interface{}{
+			"is_end": 1,
+		}})
+	}
+
+	bools["must"] = must
+	query["bool"] = bools
+
+	sortData := []map[string]string{map[string]string{"add_time":"desc"}}
+	switch sort {
+		case "episodesUpdateTime":
+			sortData = []map[string]string{map[string]string{"episodes_update_time":"desc"}}
+		case "comment":
+			sortData = []map[string]string{map[string]string{"comment":"desc"}}
+		case "addTime":
+			sortData = []map[string]string{map[string]string{"add_time":"desc"}}
+	}
+	res := es.EsSearch("ulivideo", query, offset, limit, sortData)
+	total := res.Total.Value
+	var data []Video
+
+	for _, v := range res.Hits {
+		var itemData Video
+		err := json.Unmarshal([]byte(v.Source), &itemData)
+		if err == nil {
+			data = append(data, itemData)
+		}
+	}
+
+	return int64(total), data, nil
 }
 
 func GetUserVideo(uid int) (int64, []VideoData, error) {
@@ -360,4 +423,12 @@ func SaveAliyunVideo(videoId string, log string) error {
 	_, err := o.Raw("INSERT INTO aliyun_video (video_id, log, add_time) VALUES (?,?,?)", videoId, log, time.Now().Unix()).Exec()
 	fmt.Println(err)
 	return err
+}
+
+// 获取所有视频
+func GetAllList() (int64, []Video, error)  {
+	o := orm.NewOrm()
+	var videos []Video
+	num, err := o.Raw("SELECT id,title,sub_title,status,add_time, img,img1,channel_id,type_id,region_id,user_id,episodes_count,episodes_update_time,is_end,is_hot,is_recommend,comment FROM video").QueryRows(&videos)
+	return num, videos, err
 }

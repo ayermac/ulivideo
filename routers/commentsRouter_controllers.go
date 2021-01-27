@@ -97,7 +97,88 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+    beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"],
+        beego.ControllerComments{
+            Method: "Add",
+            Router: "/es/add",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"],
+        beego.ControllerComments{
+            Method: "CreateIndex",
+            Router: "/es/createIndex",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"],
+        beego.ControllerComments{
+            Method: "Delete",
+            Router: "/es/delete",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"],
+        beego.ControllerComments{
+            Method: "Edit",
+            Router: "/es/edit",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:EsDemoController"],
+        beego.ControllerComments{
+            Method: "Search",
+            Router: "/es/search",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"],
+        beego.ControllerComments{
+            Method: "ChannelDemo",
+            Router: "/go/channel/demo",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"],
+        beego.ControllerComments{
+            Method: "Demo",
+            Router: "/go/demo",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"],
+        beego.ControllerComments{
+            Method: "SelectDemo",
+            Router: "/go/select/demo",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:GoDemoController"],
+        beego.ControllerComments{
+            Method: "TaskDemo",
+            Router: "/go/task/demo",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"],
         beego.ControllerComments{
             Method: "GetDirect",
             Router: "/mq/direct/push",
@@ -106,7 +187,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"],
         beego.ControllerComments{
             Method: "GetDlx",
             Router: "/mq/dlx/push",
@@ -115,7 +196,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"],
         beego.ControllerComments{
             Method: "GetTwoDlx",
             Router: "/mq/dlx/two/push",
@@ -124,7 +205,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"],
         beego.ControllerComments{
             Method: "GetFanout",
             Router: "/mq/fanout/push",
@@ -133,7 +214,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"],
         beego.ControllerComments{
             Method: "GetMq",
             Router: "/mq/push",
@@ -142,7 +223,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqController"],
+    beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:MqDemoController"],
         beego.ControllerComments{
             Method: "GetTopic",
             Router: "/mq/topic/push",
@@ -317,6 +398,24 @@ func init() {
         beego.ControllerComments{
             Method: "VideoSave",
             Router: "/video/save",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"],
+        beego.ControllerComments{
+            Method: "Search",
+            Router: "/video/search",
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"] = append(beego.GlobalControllerRouter["ulivideoapi/controllers:VideoController"],
+        beego.ControllerComments{
+            Method: "SendEs",
+            Router: "/video/send/es",
             AllowHTTPMethods: []string{"*"},
             MethodParams: param.Make(),
             Filters: nil,

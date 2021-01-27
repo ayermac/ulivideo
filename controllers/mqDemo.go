@@ -6,13 +6,13 @@ import (
 	"ulivideoapi/services/mq"
 )
 
-type MqController struct {
+type MqDemoController struct {
 	CommonController
 }
 
 //简单模式和work工作模式 push方法
 // @router /mq/push [*]
-func (this *MqController) GetMq() {
+func (this *MqDemoController) GetMq() {
 	go func() {
 		count := 0
 		for {
@@ -26,7 +26,7 @@ func (this *MqController) GetMq() {
 
 //订阅模式 push方法
 // @router /mq/fanout/push [*]
-func (this *MqController) GetFanout() {
+func (this *MqDemoController) GetFanout() {
 	go func() {
 		count := 0
 		for {
@@ -40,7 +40,7 @@ func (this *MqController) GetFanout() {
 
 // 路由模式
 // @router /mq/direct/push [*]
-func (this *MqController) GetDirect() {
+func (this *MqDemoController) GetDirect() {
 	go func() {
 		count := 0
 		for {
@@ -58,7 +58,7 @@ func (this *MqController) GetDirect() {
 
 // 主题模式
 // @router /mq/topic/push [*]
-func (this *MqController) GetTopic() {
+func (this *MqDemoController) GetTopic() {
 	go func() {
 		count := 0
 		var route string
@@ -85,7 +85,7 @@ func (this *MqController) GetTopic() {
 
 // 死信队列push
 // @router /mq/dlx/push [*]
-func (this *MqController) GetDlx() {
+func (this *MqDemoController) GetDlx() {
 	go func() {
 		count := 0
 		for {
@@ -102,7 +102,7 @@ func (this *MqController) GetDlx() {
 
 // 死信队列push
 // @router /mq/dlx/two/push [*]
-func (this *MqController) GetTwoDlx() {
+func (this *MqDemoController) GetTwoDlx() {
 	go func() {
 		count := 0
 		for {
